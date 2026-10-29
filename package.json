@@ -12,7 +12,8 @@
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
     "ios": "scripts/ios.sh",
-    "pages": "scripts/pages.sh"
+    "pages": "scripts/pages.sh",
+    "prepare": "git config core.hooksPath .githooks || true"
   },
   "dependencies": {
     "@capacitor/core": "^8.5.3",

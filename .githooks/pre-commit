@@ -1,0 +1,15 @@
+#!/bin/sh
+# Refuses commits whose author or committer is not thepollywog <thepollywog@proton.me>.
+NAME=thepollywog
+EMAIL=thepollywog@proton.me
+for v in GIT_AUTHOR_IDENT GIT_COMMITTER_IDENT; do
+  ident=$(git var "$v") || exit 1
+  name=${ident%% <*}
+  email=${ident#*<}
+  email=${email%%>*}
+  if [ "$name" != "$NAME" ] || [ "$email" != "$EMAIL" ]; then
+    echo "pre-commit: $v is $name <$email>, expected $NAME <$EMAIL>." >&2
+    echo "Run activate-thepollywog and commit again." >&2
+    exit 1
+  fi
+done
