@@ -37,7 +37,7 @@ The three sort games share one engine (`shared/sort`), one set of screens and on
 Shared across all games:
 - **No ads.** Undo is free. Hints, extra containers, the cannon and shuffles cost coins you earn by playing.
 - Combos, stars against a solver-computed par, and chain digs in Hex Marks the Spot.
-- XP and player ranks (Pollywog up to Admiral of the Seas), coins, daily streaks, 34 achievements and a palette shop (palettes apply to every game).
+- XP and player ranks (Pollywog up to Admiral of the Seas), coins, daily streaks, 32 achievements and a palette shop (palettes apply to every game).
 - Moves can overlap: queue up a second pour or move while the first is still animating.
 - Color-blind symbols, reduced motion, synthesized sound, haptics, and installs as a PWA.
 
@@ -46,7 +46,7 @@ Shared across all games:
 Everything follows The Pollywog's visual style guide, whose official reference is the mission wallpaper (`ThePollywogMissionWallpaper.png`): off-white paper with a fine engineering grid, navy-charcoal ink for text and lines, and small signal-orange and teal marks. No dark backgrounds, glows or gradients.
 
 - **Colors and type** are CSS variables at the top of `src/styles.css`. Titles use the Black Ops One stencil face, labels and numbers a monospace.
-- **Game pieces** use the Mission palette in `src/games/sort/palettes.ts`, muted versions of the brand colors. The other palettes in the shop are optional unlocks.
+- **Game pieces** use the Mission palette in `src/games/sort/palettes.ts`, muted versions of the brand colors. The five palettes in the shop are optional unlocks, each a muted, flat take on its theme so it still sits on paper (no neon or candy brights).
 - **App icons** are small mission patches drawn by `scripts/ios-assets.sh` from `resources/<id>/icon.svg`. The splash and the "by The Pollywog" mark use the mission patch, `resources/brand/pollywog-badge.png` and `public/pollywog.png`.
 
 ## Architecture
