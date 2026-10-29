@@ -59,3 +59,15 @@ export const paletteById = (id: string) => PALETTES.find((p) => p.id === id) ?? 
 
 /** Shapes drawn on each color in color-blind mode, indexed like palette colors. */
 export const SYMBOLS = ['●', '▲', '■', '◆', '★', '✚', '♥', '♠', '♣', '☀', '☾', '✿'];
+
+const INK_TEXT = 'rgba(11, 23, 28, 0.6)';
+const CREAM_TEXT = 'rgba(241, 233, 210, 0.9)';
+
+/** Text color for a label drawn on a piece: ink on light colors, cream on dark ones (ink, plum, brick...). */
+export function textOn(hex: string): string {
+  const n = parseInt(hex.slice(1), 16);
+  const lin = (v: number) => ((v /= 255) <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4);
+  const l = 0.2126 * lin(n >> 16) + 0.7152 * lin((n >> 8) & 255) + 0.0722 * lin(n & 255);
+  // Contrast against ink (#0b171c, L≈0.008) vs cream (#f1e9d2, L≈0.81): pick the larger.
+  return (l + 0.05) / 0.058 >= 0.86 / (l + 0.05) ? INK_TEXT : CREAM_TEXT;
+}

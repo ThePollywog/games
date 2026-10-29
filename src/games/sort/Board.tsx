@@ -4,7 +4,7 @@ import { capOf, isComplete, topRun, type Move, type Tube } from '../../../shared
 import type { PourResult, Session } from '../../../shared/sort/session.ts';
 import { buzz, sfx } from '../../platform/feedback';
 import type { Skin } from '../registry';
-import { SYMBOLS, type Palette } from './palettes';
+import { SYMBOLS, textOn, type Palette } from './palettes';
 
 /** A move that has been committed to the session but whose animation hasn't landed yet. */
 interface PendingMove {
@@ -346,6 +346,7 @@ export function Board({ session, skin, palette, colorblind, reducedMotion, disab
         height: skin === 'liquid' ? unitH + 0.6 : unitH,
         fontSize: unitH * 0.42,
         ['--c' as string]: hidden ? undefined : palette.colors[c],
+        ['--on' as string]: hidden ? undefined : textOn(palette.colors[c]),
         transform: lifted ? `translateY(${-liftBy}px)` : undefined,
       };
       const label = hidden ? '?' : colorblind ? SYMBOLS[c] : null;
@@ -430,7 +431,7 @@ export function Board({ session, skin, palette, colorblind, reducedMotion, disab
           style={{ left: f.x - tubeW / 2, top: f.y - unitH * f.colors.length, width: tubeW, height: unitH * f.colors.length }}
         >
           {f.colors.map((c, k) => (
-            <div key={k} className={`${skin === 'balls' ? 'ball' : 'nut'}-slot`} style={{ bottom: k * unitH, height: unitH, ['--c' as string]: palette.colors[c] } as CSSProperties}>
+            <div key={k} className={`${skin === 'balls' ? 'ball' : 'nut'}-slot`} style={{ bottom: k * unitH, height: unitH, ['--c' as string]: palette.colors[c], ['--on' as string]: textOn(palette.colors[c]) } as CSSProperties}>
               <div className={skin === 'balls' ? 'ball' : 'nut spinning'}>{colorblind ? SYMBOLS[c] : null}</div>
             </div>
           ))}

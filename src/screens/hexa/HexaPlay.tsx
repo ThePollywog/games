@@ -23,7 +23,7 @@ import {
 } from '../../../shared/hexa/engine.ts';
 import { randomSeed } from '../../../shared/rng.ts';
 import { GameTopBar, Stat } from '../../games/sort/Hud';
-import { paletteById } from '../../games/sort/palettes';
+import { paletteById, textOn } from '../../games/sort/palettes';
 import { api, syncStats, type SubmitResponse } from '../../platform/api';
 import { buzz, sfx } from '../../platform/feedback';
 import { toast } from '../../platform/notify';
@@ -82,7 +82,7 @@ function StackSvg({ stack, cx, cy, r, colors, label = true }: { stack: Stack; cx
         );
       })}
       {label && stack.length > 0 && (
-        <text x={cx} y={cy - (stack.length - 1) * th + r * 0.18} textAnchor="middle" className="hex-count" fontSize={r * 0.55}>
+        <text x={cx} y={cy - (stack.length - 1) * th + r * 0.18} textAnchor="middle" className="hex-count" fontSize={r * 0.55} style={{ fill: textOn(colors[stack[stack.length - 1]]) }}>
           {topRun(stack)}
         </text>
       )}

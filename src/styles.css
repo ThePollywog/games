@@ -727,7 +727,7 @@ h2 {
   right: 0;
   display: grid;
   place-items: center;
-  color: rgba(11, 23, 28, 0.5);
+  color: var(--on, rgba(11, 23, 28, 0.5));
   font-weight: 900;
   transform-origin: 50% 100%;
   animation: rise 0.28s ease-out;
@@ -1471,7 +1471,7 @@ h2 {
   display: grid;
   place-items: center;
   font-weight: 900;
-  color: rgba(11, 23, 28, 0.55);
+  color: var(--on, rgba(11, 23, 28, 0.55));
   /* A coil of rope: twisted strands drawn as thin ink lines over flat color. */
   background:
     repeating-linear-gradient(115deg, rgba(11, 23, 28, 0.22) 0 2px, transparent 2px 8px),
