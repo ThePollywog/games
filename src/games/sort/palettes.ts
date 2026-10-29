@@ -10,11 +10,12 @@ export interface Palette {
 // flat colors that sit on paper, per the Pollywog brand (BRANDING): no neon or candy brights.
 export const PALETTES: Palette[] = [
   {
-    // The brand palette: muted versions of the mission wallpaper's colors (see BRANDING).
+    // The brand palette: the mission wallpaper's colors, spread apart so no two pieces look alike,
+    // including with red-green color blindness (see BRANDING). Hex Marks uses the first 8.
     id: 'classic',
     name: 'Mission',
     price: 0,
-    colors: ['#e7730c', '#1b7a80', '#7a7442', '#8e2c2c', '#d2b26e', '#4e6e99', '#efe8d4', '#4f7a3a', '#1c2d31', '#6b4c7a', '#8a5a33', '#8d9799'],
+    colors: ['#e7730c', '#12808a', '#16232a', '#a12f2f', '#e0b43a', '#2f6db5', '#7fa64a', '#8db8d8', '#7a4b8f', '#f1e9d2', '#8b6a3e', '#d88c9a'],
     bg: 'var(--grid-paper)',
   },
   {

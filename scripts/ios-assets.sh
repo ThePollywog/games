@@ -19,6 +19,8 @@ PAPER='#e4e3db'
 INK='#1c2d31'
 ORANGE='#e7730c'
 DIR=resources/$GAME
+# No date or time chunks, so regenerating unchanged art writes byte-identical files.
+PNG=(-define png:exclude-chunk=date,time)
 TMP=$(mktemp -d)
 trap 'rm -rf "$TMP"' EXIT
 
@@ -49,8 +51,8 @@ magick -background none -density 192 "$TMP/frame.svg" -resize 1024x1024 \
   -strokewidth 6 -draw 'circle 512,512 512,88' "$TMP/frame.png"
 magick -background none -density 192 "$DIR/icon.svg" -resize 700x700 "$TMP/fg.png"
 # Full-bleed and opaque: iOS applies the rounded mask itself and rejects transparency.
-magick "$TMP/paper.png" "$TMP/frame.png" -composite "$TMP/fg.png" -gravity center -geometry +0-6 -composite -alpha off "$DIR/icon-1024.png"
-magick "$DIR/icon-1024.png" -resize 192x192 -strip "public/icons/$GAME.png"
+magick "$TMP/paper.png" "$TMP/frame.png" -composite "$TMP/fg.png" -gravity center -geometry +0-6 -composite -alpha off "${PNG[@]}" "$DIR/icon-1024.png"
+magick "$DIR/icon-1024.png" -resize 192x192 -strip "${PNG[@]}" "public/icons/$GAME.png"
 # Splash: the mission patch at its native size, centered on paper.
-magick -size 2732x2732 "xc:$PAPER" resources/brand/pollywog-badge.png -gravity center -composite -alpha off "$DIR/splash-2732.png"
+magick -size 2732x2732 "xc:$PAPER" resources/brand/pollywog-badge.png -gravity center -composite -alpha off "${PNG[@]}" "$DIR/splash-2732.png"
 echo "$DIR/icon-1024.png $DIR/splash-2732.png public/icons/$GAME.png"

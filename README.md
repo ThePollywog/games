@@ -46,7 +46,7 @@ Shared across all games:
 Everything follows The Pollywog's visual style guide, whose official reference is the mission wallpaper (`ThePollywogMissionWallpaper.png`): off-white paper with a fine engineering grid, navy-charcoal ink for text and lines, and small signal-orange and teal marks. No dark backgrounds, glows or gradients.
 
 - **Colors and type** are CSS variables at the top of `src/styles.css`. Titles use the Black Ops One stencil face, labels and numbers a monospace.
-- **Game pieces** use the Mission palette in `src/games/sort/palettes.ts`, muted versions of the brand colors. The five palettes in the shop are optional unlocks, each a muted, flat take on its theme so it still sits on paper (no neon or candy brights).
+- **Game pieces** use the Mission palette in `src/games/sort/palettes.ts`: 12 brand colors spread apart so every piece is easy to tell apart, including with red-green color blindness (Hex Marks the Spot uses the first 8). The brand guide lists them. The five palettes in the shop are optional unlocks, each a muted, flat take on its theme so it still sits on paper (no neon or candy brights).
 - **App icons** are small mission patches drawn by `scripts/ios-assets.sh` from `resources/<id>/icon.svg`. The splash and the "by The Pollywog" mark use the mission patch, `resources/brand/pollywog-badge.png` and `public/pollywog.png`.
 
 ## Architecture

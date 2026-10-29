@@ -1,10 +1,20 @@
 import confetti from 'canvas-confetti';
-import { useLayoutEffect, useRef, useState, type CSSProperties } from 'react';
+import { useLayoutEffect, useRef, useState, type CSSProperties, type PointerEvent } from 'react';
 import { capOf, isComplete, topRun, type Move, type Tube } from '../../../shared/sort/engine.ts';
 import type { PourResult, Session } from '../../../shared/sort/session.ts';
 import { buzz, sfx } from '../../platform/feedback';
 import type { Skin } from '../registry';
 import { SYMBOLS, type Palette } from './palettes';
+
+/** A move that has been committed to the session but whose animation hasn't landed yet. */
+interface PendingMove {
+  id: number;
+  from: number;
+  to: number;
+  before: Record<number, Tube>;
+  landed: boolean;
+  sourceEmptied: boolean;
+}
 
 interface Props {
   session: Session;
@@ -64,10 +74,12 @@ export function Board({ session, skin, palette, colorblind, reducedMotion, disab
   const [streams, setStreams] = useState<Record<number, Stream>>({});
   const [flyers, setFlyers] = useState<Record<number, Flyer>>({});
   const [floaters, setFloaters] = useState<Floater[]>([]);
-  // Moves commit to the session on tap, so several can be in flight at once. Tubes involved in an
-  // in-flight move are locked and show their pre-move contents until the move lands.
-  const locked = useRef(new Set<number>());
-  const [shown, setShown] = useState<Record<number, Tube>>({});
+  // Moves commit to the session on tap, so several vials can be moving at once, and a vial that is
+  // still moving can be tapped again: its next move queues behind the current one. Until a move
+  // lands, its vials show the contents they had just before it.
+  const pending = useRef<PendingMove[]>([]);
+  const queue = useRef<Record<number, Promise<void>>>({});
+  const [, setLanded] = useState(0);
   const seq = useRef(0);
   const wrap = useRef<HTMLDivElement>(null);
   const tubeEls = useRef<(HTMLDivElement | null)[]>([]);
@@ -211,18 +223,37 @@ export function Board({ session, skin, palette, colorblind, reducedMotion, disab
     }
   }
 
+  /** What a vial shows: its contents before the oldest of its moves that hasn't landed yet. */
+  function shownTube(i: number): Tube {
+    for (const m of pending.current) {
+      if (m.landed) continue;
+      if (i === m.to || (i === m.from && !m.sourceEmptied)) return m.before[i];
+    }
+    return board.tubes[i];
+  }
+
   async function doMove(from: number, to: number) {
     const before = session.board;
     const r = session.pour(from, to);
     if (!r) return;
     const id = ++seq.current;
     const fillBefore = before.tubes[to].units.length;
-    locked.current.add(from).add(to);
+    const move: PendingMove = { id, from, to, before: { [from]: before.tubes[from], [to]: before.tubes[to] }, landed: false, sourceEmptied: false };
+    pending.current.push(move);
     onBusyChange?.(true);
     setSelected(null);
+    setLanded((v) => v + 1);
+
+    // Wait for earlier moves on either vial, then claim both until this one is done.
+    const prior = Promise.all([queue.current[from], queue.current[to]]);
+    let release!: () => void;
+    const done = new Promise<void>((res) => (release = res));
+    queue.current[from] = queue.current[to] = done;
+    await prior;
 
     const land = () => {
-      setShown(({ [from]: _f, [to]: _t, ...rest }) => rest);
+      move.landed = true;
+      setLanded((v) => v + 1);
       moveSound(r, fillBefore);
       onPour(r, to);
       if (r.completed) celebrate(to, r);
@@ -231,21 +262,23 @@ export function Board({ session, skin, palette, colorblind, reducedMotion, disab
     if (reducedMotion || !tubeEls.current[from] || !tubeEls.current[to]) {
       land();
     } else if (skin === 'liquid') {
-      setShown((s) => ({ ...s, [from]: before.tubes[from], [to]: before.tubes[to] }));
       await animatePour(id, from, to, r, fillBefore, land);
     } else {
       // The source drops its items into the flyer immediately; the target waits for them.
-      setShown((s) => ({ ...s, [to]: before.tubes[to] }));
+      move.sourceEmptied = true;
+      setLanded((v) => v + 1);
       await animateFly(id, from, to, r, fillBefore, land);
     }
-    locked.current.delete(from);
-    locked.current.delete(to);
-    if (locked.current.size === 0) onBusyChange?.(false);
+    pending.current = pending.current.filter((m) => m !== move);
+    release();
+    if (queue.current[from] === done) delete queue.current[from];
+    if (queue.current[to] === done) delete queue.current[to];
+    if (pending.current.length === 0) onBusyChange?.(false);
     onSettled?.(r);
   }
 
   function tap(i: number) {
-    if (disabled || locked.current.has(i)) return;
+    if (disabled) return;
     const t = board.tubes[i];
     const pourable = t.units.length > 0 && !isComplete(t, group);
     if (selected === null) {
@@ -272,6 +305,31 @@ export function Board({ session, skin, palette, colorblind, reducedMotion, disab
     sfx.error();
     buzz(30);
     setSelected(pourable ? i : null);
+  }
+
+  /**
+   * Taps go to the vial whose resting place is under the finger, not to whatever is drawn there, so a
+   * vial that is off pouring into another can still be tapped where it normally stands.
+   */
+  function onBoardPointer(e: PointerEvent) {
+    const box = wrap.current?.getBoundingClientRect();
+    if (!box) return;
+    const x = e.clientX - box.left;
+    const y = e.clientY - box.top;
+    const slackX = Math.max(3, tubeW * 0.15);
+    let best = -1;
+    let bestD = Infinity;
+    tubeEls.current.forEach((el, i) => {
+      if (!el) return;
+      const left = el.offsetLeft - slackX;
+      const right = el.offsetLeft + el.offsetWidth + slackX;
+      const top = el.offsetTop - lift - 8;
+      const bottom = el.offsetTop + el.offsetHeight + 8;
+      if (x < left || x > right || y < top || y > bottom) return;
+      const d = Math.abs(x - (el.offsetLeft + el.offsetWidth / 2));
+      if (d < bestD) (best = i), (bestD = d);
+    });
+    if (best >= 0) tap(best);
   }
 
   function renderUnits(i: number, t: Tube) {
@@ -311,12 +369,12 @@ export function Board({ session, skin, palette, colorblind, reducedMotion, disab
   }
 
   return (
-    <div className={`board skin-${skin}`} ref={wrap} style={{ ['--tw' as string]: `${tubeW}px`, ['--uh' as string]: `${unitH}px` }}>
+    <div className={`board skin-${skin}`} ref={wrap} onPointerDown={onBoardPointer} style={{ ['--tw' as string]: `${tubeW}px`, ['--uh' as string]: `${unitH}px` }}>
       <div className="board-rows" style={{ gap: gapY }}>
         {rowsOf.map((row, r) => (
           <div className="board-row" key={r} style={{ gap: Math.max(6, tubeW * (skin === 'nuts' ? 0.22 : 0.38)) }}>
             {row.map((i) => {
-              const t = shown[i] ?? board.tubes[i];
+              const t = shownTube(i);
               const done = isComplete(t, group);
               const cls = [
                 'tube',
@@ -336,7 +394,6 @@ export function Board({ session, skin, palette, colorblind, reducedMotion, disab
                   }}
                   className={cls}
                   style={{ width: tubeW, height: tubeHOf(i), '--lift': `${-lift}px` } as CSSProperties}
-                  onPointerDown={() => tap(i)}
                   role="button"
                   aria-label={`${skin === 'nuts' ? 'Bolt' : 'Tube'} ${i + 1}`}
                 >
