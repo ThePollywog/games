@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Pollywog — Support &amp; Privacy</title>
+    <meta name="description" content="Support and privacy policy for Shipshape, Buoy Oh Buoy, Knots & Bolts and Hex Marks the Spot." />
+    <style>
+      /* The Pollywog mission plate: paper, a fine grid, navy-charcoal ink, small orange marks. */
+      @font-face {
+        font-family: 'Black Ops One';
+        src: url('black-ops-one.woff2') format('woff2');
+        font-display: swap;
+      }
+      :root {
+        --paper: #e4e3db;
+        --paper-light: #ebeae1;
+        --ink: #0b171c;
+        --ring: #1c2d31;
+        --slate: #465351;
+        --orange: #e7730c;
+        --teal: #0d5460;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        color: var(--ink);
+        font: 16px/1.6 'Helvetica Neue', Helvetica, Arial, system-ui, sans-serif;
+        background:
+          repeating-linear-gradient(0deg, rgba(28, 45, 49, 0.12) 0 1px, transparent 1px 60px),
+          repeating-linear-gradient(90deg, rgba(28, 45, 49, 0.12) 0 1px, transparent 1px 60px),
+          repeating-linear-gradient(0deg, rgba(28, 45, 49, 0.06) 0 1px, transparent 1px 12px),
+          repeating-linear-gradient(90deg, rgba(28, 45, 49, 0.06) 0 1px, transparent 1px 12px),
+          var(--paper);
+      }
+      main { max-width: 720px; margin: 0 auto; padding: 40px 16px 64px; }
+      header { text-align: center; margin-bottom: 32px; }
+      header img { width: 160px; height: 160px; }
+      h1, h2 { font-family: 'Black Ops One', 'Helvetica Neue', Arial, sans-serif; font-weight: 400; letter-spacing: 0.03em; }
+      h1 { margin: 12px 0 0; font-size: 2rem; }
+      h2 { margin-top: 0; font-size: 1.3rem; }
+      h2::before { content: ''; display: inline-block; width: 10px; height: 10px; margin-right: 10px; background: var(--orange); vertical-align: middle; }
+      section { background: rgba(235, 234, 225, 0.8); border: 1px solid var(--ring); border-radius: 6px; padding: 20px; margin: 20px 0; }
+      a { color: var(--teal); }
+      .muted { color: var(--slate); }
+      .coords { font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 0.8rem; letter-spacing: 0.08em; color: var(--slate); }
+      ul { padding-left: 1.2em; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header>
+        <img src="pollywog.png" alt="The Pollywog badge" />
+        <h1>The Pollywog</h1>
+        <p class="coords">SHIPSHAPE · BUOY OH BUOY · KNOTS &amp; BOLTS · HEX MARKS THE SPOT</p>
+      </header>
+
+      <section id="play">
+        <h2>Play</h2>
+        <p>All four games are on the App Store, with no ads. You can also play them in your browser:</p>
+        <ul>
+          <li><a href="../">Pollywog Arcade</a> (all four games)</li>
+          <li><a href="../shipshape/">Shipshape</a>, <a href="../buoy-oh-buoy/">Buoy Oh Buoy</a>, <a href="../knots-and-bolts/">Knots &amp; Bolts</a> and <a href="../hex-marks-the-spot/">Hex Marks the Spot</a></li>
+        </ul>
+      </section>
+
+      <section id="support">
+        <h2>Support</h2>
+        <p>Stuck on a level, found a bug, or have an idea? Email <a href="mailto:SUPPORT_EMAIL">SUPPORT_EMAIL</a> with the game's name and your device model, and we'll get back to you.</p>
+        <ul>
+          <li><strong>Leaderboards</strong> use Game Center. If they don't load, check you're signed in under Settings › Game Center.</li>
+          <li><strong>Progress</strong> is saved on your device. Deleting the app deletes it.</li>
+          <li><strong>Coins</strong> are earned by playing. There's nothing to buy.</li>
+        </ul>
+      </section>
+
+      <section id="privacy">
+        <h2>Privacy Policy</h2>
+        <p class="muted">Applies to Shipshape, Buoy Oh Buoy, Knots &amp; Bolts and Hex Marks the Spot. Last updated October 29, 2026.</p>
+        <p><strong>We don't collect your data.</strong> The games have no ads, no analytics, no tracking and no accounts, and they never send anything to us.</p>
+        <ul>
+          <li><strong>On your device:</strong> your progress, coins, achievements and settings are stored locally on your device and are deleted when you delete the app.</li>
+          <li><strong>In your browser:</strong> the web versions keep the same information in your browser's local storage. Clearing your browser's site data deletes it. They load no third-party scripts, fonts or trackers. The site is hosted on GitHub Pages, and GitHub may keep standard server logs of visits.</li>
+          <li><strong>Game Center:</strong> if you sign in to Game Center, your scores and Game Center nickname are sent to Apple to show leaderboards. Apple handles that data under <a href="https://www.apple.com/legal/privacy/">Apple's privacy policy</a>. You can play without signing in.</li>
+          <li><strong>Children:</strong> the games are suitable for all ages and collect no personal information from anyone, including children.</li>
+        </ul>
+        <p>If this policy changes, we'll update this page and its date. Questions: <a href="mailto:SUPPORT_EMAIL">SUPPORT_EMAIL</a>.</p>
+      </section>
+    </main>
+  </body>
+</html>

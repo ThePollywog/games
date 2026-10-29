@@ -1,0 +1,24 @@
+{
+  "name": "Pollywog Arcade",
+  "short_name": "Pollywog",
+  "description": "Ad-free nautical puzzle games from The Pollywog.",
+  "start_url": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#e4e3db",
+  "theme_color": "#e4e3db",
+  "icons": [
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+node_modules
+dist
+data
+.DS_Store
+*.log
+dist-apps
+dist-pages
+
+# Local helpers, not part of the project
+resume.sh
+.src-for-build.tgz
