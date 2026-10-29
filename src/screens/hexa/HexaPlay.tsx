@@ -317,10 +317,13 @@ function HexaGame({ mode, onAgain }: { mode: HexaMode; onAgain(): void }) {
         <Stat label="Cleared" value={g.cleared} />
         <Stat label="Best chain" value={g.bestChain ? `x${g.bestChain}` : '—'} />
       </div>
-      <p className="tip subtle">
-        Stack {CLEAR_AT} of a color to dig it up. A reef rock surfaces every {STONE_EVERY} placements
-        {g.placed ? ` — next in ${STONE_EVERY - (g.placed % STONE_EVERY)}` : ''}.
-      </p>
+      {/* A fixed-height slot, so the map keeps its size and position as this line grows. */}
+      <div className="play-note">
+        <p className="tip subtle">
+          Stack {CLEAR_AT} of a color to dig it up. A reef rock surfaces every {STONE_EVERY} placements
+          {g.placed ? ` — next in ${STONE_EVERY - (g.placed % STONE_EVERY)}` : ''}.
+        </p>
+      </div>
 
       <div className="hexa-board" ref={svgWrap}>
         <svg width={width} height={height} viewBox={`0 0 ${width} ${height}`}>

@@ -114,6 +114,7 @@ function Game({ spec, onReplay }: { spec: Spec; onReplay(): void }) {
   const [win, setWin] = useState<Win | null>(null);
   const [submit, setSubmit] = useState<{ res?: SubmitResponse; error?: string } | null>(null);
   const [tip, setTip] = useState(spec.tip);
+  const [hasNote] = useState(() => !!spec.tip || mode === 'daily');
   const [busy, setBusy] = useState(false);
   const free = mode === 'zen' || (mode === 'campaign' && (spec.campaignLevel ?? 99) <= 3);
   const controls = useGameControls(session, rerender, { hint: free ? 0 : HINT_COST, tube: mode === 'zen' ? 0 : TUBE_COST }, busy, SORT_META[game].container);
@@ -168,19 +169,24 @@ function Game({ spec, onReplay }: { spec: Spec; onReplay(): void }) {
         {mode !== 'zen' && <Stat label="Time" value={fmtTime(elapsed)} />}
         <Stat label="Moves" value={stats.moves} warn={mode !== 'zen' && stats.moves > level.par} />
         {mode !== 'zen' && <Stat label="Par" value={level.par} />}
-        {stats.maxCombo > 1 && <Stat label="Best combo" value={`x${stats.maxCombo}`} />}
+        {stats.maxCombo > 1 && <Stat label="Combo" value={`x${stats.maxCombo}`} />}
       </div>
 
-      {tip && (
-        <motion.div className="tip" initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} onClick={() => setTip(undefined)}>
-          {tip}
-        </motion.div>
-      )}
-      {mode === 'daily' && stats.restarts === 0 && stats.moves === 0 && (
-        <div className="tip subtle">
-          {spec.ranked
-            ? 'Ranked: your first solve counts. Time, moves, undos and restarts all matter.'
-            : 'Practice run — your ranked score is already in. Come back tomorrow!'}
+      {hasNote && (
+        // A fixed-height slot, so the board keeps its size and position when a note goes away.
+        <div className="play-note">
+          {tip && (
+            <motion.div className="tip" initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} onClick={() => setTip(undefined)}>
+              {tip}
+            </motion.div>
+          )}
+          {mode === 'daily' && stats.restarts === 0 && stats.moves === 0 && (
+            <div className="tip subtle">
+              {spec.ranked
+                ? 'Ranked: your first solve counts. Time, moves, undos and restarts all matter.'
+                : 'Practice run — your ranked score is already in. Come back tomorrow!'}
+            </div>
+          )}
         </div>
       )}
 

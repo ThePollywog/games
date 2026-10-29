@@ -605,6 +605,8 @@ h2 {
   color: var(--muted);
   font-family: var(--mono);
   font-weight: 700;
+  /* One line, so the HUD keeps its height when a stat appears mid-game. */
+  white-space: nowrap;
 }
 .stat strong {
   font-size: 1.15rem;
@@ -622,6 +624,28 @@ h2 {
   padding: 10px 14px;
   font-size: 0.9rem;
   font-weight: 700;
+}
+.play-note {
+  height: 76px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+  overflow: hidden;
+}
+.play-note .tip {
+  font-size: 0.82rem;
+  line-height: 1.35;
+  padding: 8px 12px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.play-note .tip.subtle {
+  -webkit-line-clamp: 3;
+  padding: 0;
 }
 .tip.subtle {
   text-align: center;
