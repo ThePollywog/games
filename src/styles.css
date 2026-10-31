@@ -574,6 +574,11 @@ h2 {
   min-height: 0;
   max-width: none;
   gap: 10px;
+  /* Vials tilt and fly past the edges while pouring. Clip them here so they never make the page
+     scrollable: in Safari a scrollable page lets rapid taps scroll it and the toolbar collapse, which
+     resizes and shifts the whole board mid-game. Rapid taps must never double-tap zoom either. */
+  overflow: hidden;
+  touch-action: manipulation;
 }
 .screen.play > * {
   width: 100%;
@@ -659,6 +664,7 @@ h2 {
 .board {
   position: relative;
   flex: 1;
+  touch-action: manipulation;
   min-height: 240px;
   display: flex;
   align-items: center;
@@ -717,7 +723,8 @@ h2 {
   border: 3px solid var(--ring);
   border-top: 0;
   border-radius: 0 0 calc(var(--tw) / 2) calc(var(--tw) / 2);
-  background: rgba(235, 234, 225, 0.6);
+  /* A faint ink tint, so even the lightest liquid reads against an empty glass. */
+  background: rgba(28, 45, 49, 0.08);
   overflow: hidden;
 }
 

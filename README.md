@@ -23,6 +23,8 @@ Requires Node 24+ (runs TypeScript natively and uses the built-in `node:sqlite`)
 
 `.github/workflows/pages.yml` runs the tests, builds the Pages site and deploys it on every push to `main`. Turn it on under the repo's Settings › Pages › Source: GitHub Actions.
 
+The web builds (server and Pages) are installable PWAs that play offline: `scripts/pwa.ts` writes a service worker that precaches each build, and gives each single-game build its own manifest name and icon. Open the site in Safari and use Share › Add to Home Screen, or the install button in Chrome.
+
 ## Games
 
 | Game | Id | Twist | Modes and leaderboards |

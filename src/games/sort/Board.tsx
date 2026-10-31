@@ -84,7 +84,12 @@ export function Board({ session, skin, palette, colorblind, reducedMotion, disab
   const wrap = useRef<HTMLDivElement>(null);
   const tubeEls = useRef<(HTMLDivElement | null)[]>([]);
   const flyerEls = useRef<Record<number, HTMLDivElement | null>>({});
-  const { w, h } = useSize(wrap);
+  // Hold the layout still while anything is moving: the animations measure vial positions once, and
+  // a resize mid-pour (a browser bar sliding, a HUD stat appearing) would jump every vial under them.
+  const liveSize = useSize(wrap);
+  const steadySize = useRef(liveSize);
+  if (pending.current.length === 0 || steadySize.current.w === 0) steadySize.current = liveSize;
+  const { w, h } = steadySize.current;
 
   // Layout: one row for small boards, two rows otherwise; tubes scale to fit both axes.
   const n = board.tubes.length;
