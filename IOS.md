@@ -20,17 +20,16 @@ Each app's files are in `ios/<id>/` (Xcode project), `resources/<id>/` (icon art
 - have a listing: name, subtitle, promo text, description, keywords, category, age rating
 - use the Pollywog mission-plate look: paper, grid, ink and small orange marks, with patch icons and the mission patch as the splash
 - have three 6.9" screenshots (1320×2868): home, a game in progress, the daily challenge
-- have a support page (`store/site/`, published at `/support/`) and a privacy policy (`store/privacy/`, published at `/privacy/`) on the GitHub Pages site, linked from each app's home screen
+- have a support page (`store/site/`, published at `/support/`, support email thepollywog@proton.me) and a privacy policy (`store/privacy/`, published at `/privacy/`) on the GitHub Pages site, linked from each app's home screen
 
 **Still to do:**
 
-1. **Fill in the support email.** Replace the `SUPPORT_EMAIL` placeholders in `store/site/index.html` and `store/privacy/index.html`, then push to `main`. The Support URL is https://thepollywog.github.io/games/support/ and the Privacy Policy URL is https://thepollywog.github.io/games/privacy/.
-2. **Register the apps.** In your Apple Developer account, register the four bundle ids with the Game Center capability, then create the four apps in App Store Connect. The developer name buyers see comes from the account; set it to The Pollywog if you want that.
-3. **Set signing.** Open each project (`npm run ios -- open <id>`) and choose your team under Signing & Capabilities. The only signing certificate on the build Mac belonged to a different Apple account, so make sure you pick the right team.
-4. **Create the leaderboards** listed below, and enable Game Center on each app version.
-5. **Fill in each listing.** Copy the fields from `store/<id>.md`, upload the screenshots, and answer App Privacy and the age rating as in [store/RELEASE.md](store/RELEASE.md).
-6. **Test in TestFlight** with a Game Center sandbox account signed in.
-7. **Archive and submit.** In Xcode, go to Product › Archive › Distribute App › App Store Connect. Before each new upload, raise the build number (`CURRENT_PROJECT_VERSION`).
+1. **Register the apps.** In your Apple Developer account, register the four bundle ids with the Game Center capability, then create the four apps in App Store Connect. The developer name buyers see comes from the account; set it to The Pollywog if you want that.
+2. **Set signing.** Open each project (`npm run ios -- open <id>`) and choose your team under Signing & Capabilities. The only signing certificate on the build Mac belonged to a different Apple account, so make sure you pick the right team.
+3. **Create the leaderboards** listed below, and enable Game Center on each app version.
+4. **Fill in each listing.** Copy the fields from `store/<id>.md`, upload the screenshots, and answer App Privacy and the age rating as in [store/RELEASE.md](store/RELEASE.md).
+5. **Test in TestFlight** with a Game Center sandbox account signed in.
+6. **Archive and submit.** In Xcode, go to Product › Archive › Distribute App › App Store Connect. Before each new upload, raise the build number (`CURRENT_PROJECT_VERSION`).
 
 ## Commands
 

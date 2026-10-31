@@ -2,19 +2,15 @@
 
 Everything to type into App Store Connect for the four apps, and the steps left. How the apps are built, the leaderboard settings and the review risks are in [IOS.md](../IOS.md); each app's long-form listing text is in `store/<id>.md`.
 
-## Before anything else: placeholders
+## Things only you can give
 
-| Placeholder | Where | Replace with |
-| --- | --- | --- |
-| `SUPPORT_EMAIL` (2×) | `store/site/index.html` (Support section) and `store/privacy/index.html` (Changes and questions) | The Pollywog's support address. Then push to `main`; the Pages workflow republishes both pages. |
-
-App Store Connect will also ask for things only you can give: App Review contact (name, phone, email), and the developer name buyers see, which comes from your Apple Developer account.
+App Store Connect will ask for your App Review contact (name, phone, email), and the developer name buyers see comes from your Apple Developer account.
 
 ## Shared answers (all four apps)
 
 | Field | Answer |
 | --- | --- |
-| Support URL | https://thepollywog.github.io/games/support/ |
+| Support URL | https://thepollywog.github.io/games/support/ (support email: thepollywog@proton.me) |
 | Privacy Policy URL | https://thepollywog.github.io/games/privacy/ |
 | Marketing URL (optional) | https://thepollywog.github.io/games/ |
 | Version | 1.0.0, build 1 (set in `scripts/ios-setup.rb`) |
@@ -58,12 +54,11 @@ Screenshots, in upload order: `1-home.png`, `2-play.png`, `3-daily.png`. Upload 
 
 ## Steps left, in order
 
-1. **Fill in the support email** (table above) and push.
-2. **Register the bundle IDs.** developer.apple.com › Certificates, IDs & Profiles › Identifiers: add the four bundle IDs above as App IDs, each with the **Game Center** capability.
-3. **Create the four apps** in App Store Connect › Apps › New App: iOS, the name, English (U.S.), the bundle ID and SKU from the table.
-4. **Create the leaderboards** for each app (15 in all), exactly as in IOS.md.
-5. **Set signing in Xcode.** `npm run ios -- build`, then for each app open `ios/<id>/App/App.xcodeproj`, select the App target › Signing & Capabilities, tick *Automatically manage signing* and choose The Pollywog's team. Check the team before archiving: IOS.md explains why.
-6. **Archive and upload.** In Xcode, set the destination to *Any iOS Device (arm64)*, then Product › Archive › Distribute App › App Store Connect › Upload. Repeat for each app. Raise the build number before any re-upload.
-7. **Test in TestFlight** with a Game Center sandbox account: leaderboards load, scores post, and the Support and Privacy links open Safari.
-8. **Complete each version page:** paste the listing, upload the screenshots, answer App Privacy and the age rating as above, turn on Game Center and attach the leaderboards, pick the build, and set pricing and availability.
-9. **Submit for review.** Send one sort game and Hex Marks the Spot first; IOS.md › Review risks explains why the three sort games shouldn't all go at once.
+1. **Register the bundle IDs.** developer.apple.com › Certificates, IDs & Profiles › Identifiers: add the four bundle IDs above as App IDs, each with the **Game Center** capability.
+2. **Create the four apps** in App Store Connect › Apps › New App: iOS, the name, English (U.S.), the bundle ID and SKU from the table.
+3. **Create the leaderboards** for each app (15 in all), exactly as in IOS.md.
+4. **Set signing in Xcode.** `npm run ios -- build`, then for each app open `ios/<id>/App/App.xcodeproj`, select the App target › Signing & Capabilities, tick *Automatically manage signing* and choose The Pollywog's team. Check the team before archiving: IOS.md explains why.
+5. **Archive and upload.** In Xcode, set the destination to *Any iOS Device (arm64)*, then Product › Archive › Distribute App › App Store Connect › Upload. Repeat for each app. Raise the build number before any re-upload.
+6. **Test in TestFlight** with a Game Center sandbox account: leaderboards load, scores post, and the Support and Privacy links open Safari.
+7. **Complete each version page:** paste the listing, upload the screenshots, answer App Privacy and the age rating as above, turn on Game Center and attach the leaderboards, pick the build, and set pricing and availability.
+8. **Submit for review.** Send one sort game and Hex Marks the Spot first; IOS.md › Review risks explains why the three sort games shouldn't all go at once.
