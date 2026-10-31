@@ -31,13 +31,30 @@ export function AppNav({ game }: { game: GameId }) {
   );
 }
 
-/** The studio's mark: the Pollywog badge and name. */
+/** The public site with the support and privacy pages, which the App Store listings also link to. */
+const SITE = 'https://thepollywog.github.io/games/';
+
+/**
+ * The studio's mark: the Pollywog badge and name, with links to support and the privacy policy (Apple
+ * wants the policy reachable inside the app; on iOS these open in Safari).
+ */
 export function Maker() {
   return (
-    <p className="maker">
-      <img src={`${import.meta.env.BASE_URL}pollywog.png`} alt="" />
-      by The Pollywog
-    </p>
+    <>
+      <p className="maker">
+        <img src={`${import.meta.env.BASE_URL}pollywog.png`} alt="" />
+        by The Pollywog
+      </p>
+      <p className="maker-links">
+        <a href={`${SITE}support/`} target="_blank" rel="noopener">
+          Support
+        </a>
+        <span aria-hidden="true">·</span>
+        <a href={`${SITE}privacy/`} target="_blank" rel="noopener">
+          Privacy
+        </a>
+      </p>
+    </>
   );
 }
 

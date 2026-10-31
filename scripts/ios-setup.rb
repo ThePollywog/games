@@ -11,6 +11,9 @@ root = File.expand_path('..', __dir__)
 app_dir = File.join(root, 'ios', game, 'App')
 abort "#{app_dir} missing; run `GAME=#{game} npx cap add ios` first" unless Dir.exist?(app_dir)
 shared = '../../../native/ios' # relative to ios/<game>/App, where the .xcodeproj lives
+# The App Store version for all four apps. Raise the build number (CURRENT_PROJECT_VERSION) in Xcode
+# before each upload; raise this for each new release.
+VERSION = '1.0.0'
 
 # --- Xcode project ---
 project = Xcodeproj::Project.open(File.join(app_dir, 'App.xcodeproj'))
@@ -32,6 +35,7 @@ target.add_system_framework('GameKit') unless target.frameworks_build_phase.file
 target.build_configurations.each do |c|
   c.build_settings['CODE_SIGN_ENTITLEMENTS'] = "#{shared}/App.entitlements"
   c.build_settings['TARGETED_DEVICE_FAMILY'] = '1'
+  c.build_settings['MARKETING_VERSION'] = VERSION
 end
 project.save
 

@@ -1,0 +1,41 @@
+/* Shared by the support and privacy pages. The Pollywog mission plate: paper, a fine grid, navy-charcoal ink, small orange marks. */
+@font-face {
+  font-family: 'Black Ops One';
+  src: url('black-ops-one.woff2') format('woff2');
+  font-display: swap;
+}
+:root {
+  --paper: #e4e3db;
+  --paper-light: #ebeae1;
+  --ink: #0b171c;
+  --ring: #1c2d31;
+  --slate: #465351;
+  --orange: #e7730c;
+  --teal: #0d5460;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  color: var(--ink);
+  font: 16px/1.6 'Helvetica Neue', Helvetica, Arial, system-ui, sans-serif;
+  background:
+    repeating-linear-gradient(0deg, rgba(28, 45, 49, 0.12) 0 1px, transparent 1px 60px),
+    repeating-linear-gradient(90deg, rgba(28, 45, 49, 0.12) 0 1px, transparent 1px 60px),
+    repeating-linear-gradient(0deg, rgba(28, 45, 49, 0.06) 0 1px, transparent 1px 12px),
+    repeating-linear-gradient(90deg, rgba(28, 45, 49, 0.06) 0 1px, transparent 1px 12px),
+    var(--paper);
+}
+main { max-width: 720px; margin: 0 auto; padding: 40px 16px 64px; }
+header { text-align: center; margin-bottom: 32px; }
+header img { width: 160px; height: 160px; }
+h1, h2 { font-family: 'Black Ops One', 'Helvetica Neue', Arial, sans-serif; font-weight: 400; letter-spacing: 0.03em; }
+h1 { margin: 12px 0 0; font-size: 2rem; }
+h2 { margin-top: 0; font-size: 1.3rem; }
+h2::before { content: ''; display: inline-block; width: 10px; height: 10px; margin-right: 10px; background: var(--orange); vertical-align: middle; }
+section { background: rgba(235, 234, 225, 0.8); border: 1px solid var(--ring); border-radius: 6px; padding: 20px; margin: 20px 0; }
+a { color: var(--teal); }
+.muted { color: var(--slate); }
+.coords { font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 0.8rem; letter-spacing: 0.08em; color: var(--slate); }
+ul { padding-left: 1.2em; }
+nav.pages { text-align: center; font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 0.8rem; letter-spacing: 0.08em; }
+nav.pages a { margin: 0 6px; }

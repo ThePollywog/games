@@ -1682,6 +1682,19 @@ h2 {
   height: 34px;
   border-radius: 50%;
 }
+.maker-links {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: -4px;
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+.maker-links a {
+  color: var(--teal);
+}
 
 /* Stencil lettering for titles, as on the Pollywog patch. */
 .logo,

@@ -9,26 +9,26 @@
 | Knots & Bolts: Rope Sort | Knots & Bolts | `knots-and-bolts` | `com.thepollywog.knotsandbolts` |
 | Hex Marks the Spot | Hex Marks | `hex-marks-the-spot` | `com.thepollywog.hexmarksthespot` |
 
-Each app's files are in `ios/<id>/` (Xcode project), `resources/<id>/` (icon art), `store/<id>.md` (listing) and `store/screenshots/<id>/`.
+Each app's files are in `ios/<id>/` (Xcode project), `resources/<id>/` (icon art), `store/<id>.md` (listing) and `store/screenshots/<id>/`. **[store/RELEASE.md](store/RELEASE.md)** is the sheet of App Store Connect answers and the ordered steps to release.
 
 ## Status
 
 **Done in the repo.** All four apps:
 
-- build for device in Release, iPhone only, portrait, version 1.0 (build 1)
+- build for device in Release, iPhone only, portrait, version 1.0.0 (build 1)
 - have an icon, splash screen, privacy manifest and export-compliance flag
 - have a listing: name, subtitle, promo text, description, keywords, category, age rating
 - use the Pollywog mission-plate look: paper, grid, ink and small orange marks, with patch icons and the mission patch as the splash
 - have three 6.9" screenshots (1320×2868): home, a game in progress, the daily challenge
-- share one support and privacy page, `store/site/index.html`, which the GitHub Pages site publishes at `/support/`
+- have a support page (`store/site/`, published at `/support/`) and a privacy policy (`store/privacy/`, published at `/privacy/`) on the GitHub Pages site, linked from each app's home screen
 
 **Still to do:**
 
-1. **Publish the support page.** Replace both `SUPPORT_EMAIL` placeholders in `store/site/index.html`, then push to `main` so GitHub Pages publishes it at `<site>/support/`. The Privacy Policy URL is `<site>/support/#privacy` and the Support URL is `<site>/support/#support`.
+1. **Fill in the support email.** Replace the `SUPPORT_EMAIL` placeholders in `store/site/index.html` and `store/privacy/index.html`, then push to `main`. The Support URL is https://thepollywog.github.io/games/support/ and the Privacy Policy URL is https://thepollywog.github.io/games/privacy/.
 2. **Register the apps.** In your Apple Developer account, register the four bundle ids with the Game Center capability, then create the four apps in App Store Connect. The developer name buyers see comes from the account; set it to The Pollywog if you want that.
 3. **Set signing.** Open each project (`npm run ios -- open <id>`) and choose your team under Signing & Capabilities. The only signing certificate on the build Mac belonged to a different Apple account, so make sure you pick the right team.
 4. **Create the leaderboards** listed below, and enable Game Center on each app version.
-5. **Fill in each listing.** Copy the fields from `store/<id>.md`, upload the screenshots, and answer App Privacy with "Data Not Collected".
+5. **Fill in each listing.** Copy the fields from `store/<id>.md`, upload the screenshots, and answer App Privacy and the age rating as in [store/RELEASE.md](store/RELEASE.md).
 6. **Test in TestFlight** with a Game Center sandbox account signed in.
 7. **Archive and submit.** In Xcode, go to Product › Archive › Distribute App › App Store Connect. Before each new upload, raise the build number (`CURRENT_PROJECT_VERSION`).
 
@@ -89,7 +89,7 @@ That's 15 in total. Start every recurring board at 00:00 **UTC**, because the ga
 
 | | |
 | --- | --- |
-| Version | 1.0 (build 1) |
+| Version | 1.0.0 (build 1), set in `scripts/ios-setup.rb` |
 | Devices | iPhone, portrait only. iPads run the apps in iPhone compatibility mode. |
 | Haptics | `@capacitor/haptics`, because iOS doesn't support the browser's `navigator.vibrate` |
 | Privacy | No data collected, no tracking, no ads, no purchases |
